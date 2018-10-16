@@ -8,7 +8,7 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
     
 			
 	function setup_elements() {
-		debug($block);
+		
 	}
 
 	public static function enqueue_action($block_id, $block) {
@@ -21,8 +21,6 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 
 	function content($block) {
 
-		debug($block);
-
 		// Content
 		$post_type 			= ($block['settings']['post-type']) ? $block['settings']['post-type']: 'post';
 		$categories 		= ($block['settings']['categories']) ? $block['settings']['categories']: array();
@@ -30,60 +28,8 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$order 				= ($block['settings']['order']) ? $block['settings']['order']: 'desc';
 		$onlyShowFeatured 	= ($block['settings']['only-featured']) ? true: false;
 
-		// Settings
-		$carouselParams 	= '';
-
-		if($block['settings']['items']){
-			$carouselParams .= 'items:'.$block['settings']['items'].',';
-		}
-		$margin 			= ($block['settings']['margin']) ? $block['settings']['margin']: 0;
-		$loop 				= ($block['settings']['loop']) ? 'true': 'false';
-		$center 			= ($block['settings']['center']) ? 'true': 'false';
-		$mouseDrag 			= ($block['settings']['mouse-drag']) ? 'true': 'false';
-		$touchDrag 			= ($block['settings']['touch-drag']) ? 'true': 'false';
-		$pullDrag 			= ($block['settings']['pull-drag']) ? 'true': 'false';
-		$freeDrag 			= ($block['settings']['free-drag']) ? 'true': 'false';
-		$stagePadding 		= ($block['settings']['stage-dadding']) ? $block['settings']['stage-padding']: 0;
-		$merge 				= ($block['settings']['merge']) ? 'true': 'false';
-		$mergeFit 			= ($block['settings']['merge-fit']) ? 'true': 'false';
-		$autoWidth 			= ($block['settings']['auto-width']) ? 'true': 'false';
-		$startPosition 		= ($block['settings']['start-position']) ? $block['settings']['start-position']: 0;
-		$URLhashListener 	= ($block['settings']['url-hash-listener']) ? 'true': 'false';
-		$nav 				= ($block['settings']['nav']) ? 'true': 'false';
-		$rewind 			= ($block['settings']['rewind']) ? 'true': 'false';
-		$navText_next		= ($block['settings']['nav-text-next']) ? $block['settings']['nav-text-next']: '&#x27;next&#x27;';
-		$navText_prev		= ($block['settings']['nav-text-prev']) ? $block['settings']['nav-text-prev']: '&#x27;prev&#x27;';
-		$navText 			= '['.$navText_next.','.$navText_prev.']';
-		$navElement 		= ($block['settings']['nav-element']) ? $block['settings']['nav-element']: 'div';
-		$slideBy 			= ($block['settings']['slide-by']) ? $block['settings']['slide-by']: 1;
-		$slideTransition 	= ($block['settings']['slide-transition']) ? $block['settings']['slide-transition']: '';
-		$dots 				= ($block['settings']['dots']) ? 'true': 'false';
-		$dotsEach 			= ($block['settings']['dots-each']) ? $block['settings']['dots-each']: 0;
-		$dotsData 			= ($block['settings']['dots-data']) ? 'true': 'false';
-		$lazyLoad 			= ($block['settings']['lazy-load']) ? 'true': 'false';
-		$lazyLoadEager		= ($block['settings']['lazy-load-eager']) ? $block['settings']['lazy-load-eager']: 0;
-		$auto_play 			= ($block['settings']['autoplay']) ? 'true': 'false';
-		$autoplayTimeout 	= ($block['settings']['autoplay-timeout']) ? $block['settings']['autoplay-timeout']: 5000;
-		$autoplayHoverPause = ($block['settings']['autoplay-hover-pause']) ? 'true': 'false';
-		$callbacks 			= ($block['settings']['callbacks']) ? 'true': 'false';
-		$responsiveRefreshRate 	= ($block['settings']['responsive-refresh-rate']) ? $block['settings']['responsive-refresh-rate']: 200;
-		$video 				= ($block['settings']['video']) ? 'true': 'false';
-		$videoHeight 		= ($block['settings']['video-height']) ? 'true': 'false';
-		$videoWidth 		= ($block['settings']['video-width']) ? 'true': 'false';
-		$animateOut 		= ($block['settings']['animate-out']) ? $block['settings']['animate-out']: '';
-		$animateIn 			= ($block['settings']['animate-in']) ? $block['settings']['animate-in']: '';
-		$fallbackEasing 	= ($block['settings']['fallback-easing']) ? $block['settings']['fallback-easing']: '';
-		$nestedItemSelector = ($block['settings']['nested-item-selector']) ? $block['settings']['nested-item-selector']: '';
-		$itemElement 		= ($block['settings']['item-element']) ? $block['settings']['item-element']: 'div';
-		$stageElement 		= ($block['settings']['stage-element']) ? $block['settings']['stage-element']: 'div';
-		$navContainer 		= ($block['settings']['nav-container']) ? $block['settings']['nav-container']: '';
-		$dotsContainer 		= ($block['settings']['dots-container']) ? $block['settings']['dots-container']: '';
-		$checkVisible 		= ($block['settings']['check-visible']) ? 'true': 'false';
-
-
 		global $post;
 
-		$psrndn = rand(1,1000);
 		$args 	= array ( 
 					'post_type' 		=> $post_type,
 					'posts_per_page' 	=> $number,
@@ -104,68 +50,272 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$content_slider_query = new WP_Query( $args );
 
 
-		$result = '<script type="text/javascript">';
-		$result .= 'jQuery(document).ready(function($){';
-		$result .= '$("#content-slider-'.$psrndn.'.owl-carousel").owlCarousel({';
-		//$result .= 'items:'.$items.',';
-		$result .= $carouselParams;
-		$result .= 'margin:'.$margin.',';
-		$result .= 'loop:'.$loop.',';
-		$result .= 'center:'.$center.',';
-		$result .= 'mouseDrag:'.$mouseDrag.',';
-		$result .= 'touchDrag:'.$touchDrag.',';
-		$result .= 'pullDrag:'.$pullDrag.',';
-		$result .= 'freeDrag:'.$freeDrag.',';
-		$result .= 'stagePadding:'.$stagePadding.',';
-		$result .= 'merge:'.$merge.',';
-		$result .= 'mergeFit:'.$mergeFit.',';
-		$result .= 'autoWidth:'.$autoWidth.',';
-		$result .= 'startPosition:'.$startPosition.',';
-		$result .= 'URLhashListener:'.$URLhashListener.',';
-		$result .= 'nav:'.$nav.',';
-		$result .= 'rewind:'.$rewind.',';
-		$result .= 'navText:"'.$navText.'",';
-		$result .= 'navElement:"'.$navElement.'",';
-		$result .= 'slideBy:'.$slideBy.',';
-		$result .= 'slideTransition:"'.$slideTransition.'",';
-		$result .= 'dots:'.$dots.',';
-		$result .= 'dotsEach:'.$dotsEach.',';
-		$result .= 'dotsData:'.$dotsData.',';
-		$result .= 'lazyLoad:'.$lazyLoad.',';
-		$result .= 'lazyLoadEager:'.$lazyLoadEager.',';
-		$result .= 'auto_play:'.$auto_play.',';
-		$result .= 'autoplayTimeout:'.$autoplayTimeout.',';
-		$result .= 'autoplayHoverPause:'.$autoplayHoverPause.',';
-		$result .= 'callbacks:'.$callbacks.',';
-		$result .= 'responsiveRefreshRate:'.$responsiveRefreshRate.',';
-		$result .= 'video:'.$video.',';
-		$result .= 'videoHeight:'.$videoHeight.',';
-		$result .= 'videoWidth:'.$videoWidth.',';
-		$result .= 'animateOut:"'.$animateOut.'",';
-		$result .= 'animateIn:"'.$animateIn.'",';
-		$result .= 'fallbackEasing:"'.$fallbackEasing.'",';
-		$result .= 'nestedItemSelector:"'.$nestedItemSelector.'",';
-		$result .= 'itemElement:"'.$itemElement.'",';
-		$result .= 'stageElement:"'.$stageElement.'",';
-		$result .= 'navContainer:"'.$navContainer.'",';
-		$result .= 'dotsContainer:"'.$dotsContainer.'",';
-		$result .= 'checkVisible:'.$checkVisible.',';
-		$result .= '});});</script>';
-		$result .= '<div id="content-slider-'.$psrndn.'" class="owl-carousel owl-theme">';
+		$result = '<div id="content-slider-'.$block['id'].'" class="owl-carousel owl-theme">';
 
 		while ( $content_slider_query->have_posts() ) : $content_slider_query->the_post();
 
 			setup_postdata( $post );			
-			if($onlyShowFeatured && has_post_thumbnail()){
-				$result .= '<div class="item">'.get_the_post_thumbnail( $post->ID, 'content-slider-thumb', array( 'class' => "img-responsive" ) ).'</div>';
+
+			if($block['settings']['item-width']){
+				$itemTag = '<div class="item" style="width:'.$block['settings']['item-width'].'px">';
 			}else{
-				$result .= '<div class="item">'.do_shortcode(get_the_content()).'</div>';				
+				$itemTag = '<div class="item">';
+			}
+
+			if($onlyShowFeatured && has_post_thumbnail()){
+				$result .= $itemTag.get_the_post_thumbnail( $post->ID, 'content-slider-thumb', array( 'class' => "img-responsive" ) ).'</div>';
+			}else{
+				$result .= $itemTag.do_shortcode(get_the_content()).'</div>';				
 			}
 
 		endwhile;
 		wp_reset_postdata();
 
 		echo $result;
+	}
+
+	public static function dynamic_js($block_id, $block = false) {
+
+		if ( !$block )
+			$block = PadmaBlocksData::get_block($block_id);
+
+		// Settings
+		$carouselParams 	= '';
+
+		if($block['settings']['items'])
+			$carouselParams .= 'items:'.$block['settings']['items'].',';
+		else
+			$carouselParams .= 'items:3,';
+
+		if($block['settings']['margin']){
+			$carouselParams .= 'margin:'.$block['settings']['margin'].',';
+		}
+
+		if($block['settings']['loop']){
+			$loop 			= ($block['settings']['loop']) ? 'true': 'false';
+			$carouselParams .= 'loop:'.$loop.',';
+		}
+
+		if($block['settings']['center']){
+			$center 		= ($block['settings']['center']) ? 'true': 'false';
+			$carouselParams .= 'center:'.$center.',';
+		}
+
+		if($block['settings']['mouse-drag']){
+			$mouseDrag 		= ($block['settings']['mouse-drag']) ? 'true': 'false';
+			$carouselParams .= 'mouseDrag:'.$mouseDrag.',';
+		}
+
+		if($block['settings']['touch-drag']){
+			$touchDrag 		= ($block['settings']['touch-drag']) ? 'true': 'false';
+			$carouselParams .= 'touchDrag:'.$touchDrag.',';
+		}
+
+		if($block['settings']['pull-drag']){
+			$pullDrag 		= ($block['settings']['pull-drag']) ? 'true': 'false';
+			$carouselParams .= 'pullDrag:'.$pullDrag.',';
+		}
+
+		if($block['settings']['free-drag']){
+			$freeDrag 		= ($block['settings']['free-drag']) ? 'true': 'false';
+			$carouselParams .= 'freeDrag:'.$freeDrag.',';
+		}
+
+		if($block['settings']['stage-padding']){
+			$stagePadding 	= ($block['settings']['stage-padding']) ? $block['settings']['stage-padding']: 0;
+			$carouselParams .= 'stagePadding:'.$stagePadding.',';
+		}
+
+		if($block['settings']['merge']){
+			$merge 			= ($block['settings']['merge']) ? 'true': 'false';
+			$carouselParams .= 'merge:'.$merge.',';
+		}
+
+		if($block['settings']['merge-fit']){
+			$mergeFit 		= ($block['settings']['merge-fit']) ? 'true': 'false';
+			$carouselParams .= 'mergeFit:'.$mergeFit.',';
+		}
+
+		if($block['settings']['auto-width']){
+			$autoWidth 		= ($block['settings']['auto-width']) ? 'true': 'false';
+			$carouselParams .= 'autoWidth:'.$autoWidth.',';
+		}
+
+		if($block['settings']['start-position']){
+			$startPosition 	= ($block['settings']['start-position']) ? $block['settings']['start-position']: 0;
+			$carouselParams .= 'startPosition:'.$startPosition.',';
+		}
+
+		if($block['settings']['url-hash-listener']){
+			$URLhashListener = ($block['settings']['url-hash-listener']) ? 'true': 'false';
+			$carouselParams .= 'URLhashListener:'.$URLhashListener.',';
+		}
+
+		if($block['settings']['nav']){
+			$nav = ($block['settings']['nav']) ? 'true': 'false';
+			$carouselParams .= 'nav: true, pagination:'.$nav.',';
+		}
+
+		if($block['settings']['rewind']){
+			$rewind = ($block['settings']['rewind']) ? 'true': 'false';
+			$carouselParams .= 'rewind:'.$rewind.',';
+		}
+
+		if($block['settings']['rewind']){
+			$rewind = ($block['settings']['rewind']) ? 'true': 'false';
+			$carouselParams .= 'rewind:'.$rewind.',';
+		}
+
+		if($block['settings']['nav-text-next'] || $block['settings']['nav-text-prev']){
+			$navText_next	= ($block['settings']['nav-text-next']) ? $block['settings']['nav-text-next']: '&#x27;next&#x27;';
+			$navText_prev	= ($block['settings']['nav-text-prev']) ? $block['settings']['nav-text-prev']: '&#x27;prev&#x27;';
+			$navText 		= '['.$navText_next.','.$navText_prev.']';			
+			$carouselParams 		.= 'navText:"'.$navText.'",';
+		}
+
+		if($block['settings']['nav-element']){
+			$navElement 	= ($block['settings']['nav-element']) ? $block['settings']['nav-element']: 'div';
+			$carouselParams .= 'navElement:'.$navElement.',';
+		}
+
+		if($block['settings']['slide-by']){
+			$slideBy 		= ($block['settings']['slide-by']) ? $block['settings']['slide-by']: 1;
+			$carouselParams .= 'slideBy:'.$slideBy.',';
+		}
+
+		if($block['settings']['slide-transition']){
+			$slideTransition = ($block['settings']['slide-transition']) ? $block['settings']['slide-transition']: '';
+			$carouselParams .= 'slideTransition:'.$slideTransition.',';
+		}
+
+		if($block['settings']['dots']){
+			$dots 			= ($block['settings']['dots']) ? 'true': 'false';
+			$carouselParams .= 'dots:'.$dots.',';
+		}
+
+		if($block['settings']['dots-each']){
+			$dotsEach 		= ($block['settings']['dots-each']) ? $block['settings']['dots-each']: 0;
+			$carouselParams .= 'dotsEach:'.$dotsEach.',';
+		}
+
+		if($block['settings']['dots-each']){
+			$dotsEach 		= ($block['settings']['dots-each']) ? $block['settings']['dots-each']: 0;
+			$carouselParams .= 'dotsEach:'.$dotsEach.',';
+		}
+
+		if($block['settings']['dots-data']){
+			$dotsData 		= ($block['settings']['dots-data']) ? 'true': 'false';
+			$carouselParams .= 'dotsData:'.$dotsData.',';
+		}
+
+		if($block['settings']['lazy-load']){
+			$lazyLoad 		= ($block['settings']['lazy-load']) ? 'true': 'false';
+			$carouselParams .= 'lazyLoad:'.$lazyLoad.',';
+		}
+
+		if($block['settings']['lazy-load-eager']){
+			$lazyLoadEager   = ($block['settings']['lazy-load-eager']) ? $block['settings']['lazy-load-eager']: 0;
+			$carouselParams .= 'lazyLoadEager:'.$lazyLoadEager.',';
+		}
+
+		if($block['settings']['autoplay']){
+			$autoplay 		= ($block['settings']['autoplay']) ? 'true': 'false';
+			$carouselParams .= 'autoPlay:'.$autoplay.',';
+		}
+
+		if($block['settings']['autoplay-timeout']){
+			$autoplayTimeout = ($block['settings']['autoplay-timeout']) ? $block['settings']['autoplay-timeout']: 5000;
+			$carouselParams .= 'autoplayTimeout:'.$autoplayTimeout.',';
+		}
+
+		if($block['settings']['autoplay-hover-pause']){
+			$autoplayHoverPause = ($block['settings']['autoplay-hover-pause']) ? 'true': 'false';
+			$carouselParams 	.= 'autoplayHoverPause:'.$autoplayHoverPause.',';
+		}
+
+		if($block['settings']['callbacks']){
+			$callbacks 			= ($block['settings']['callbacks']) ? 'true': 'false';
+			$carouselParams 	.= 'callbacks:'.$callbacks.',';
+		}
+
+		if($block['settings']['responsive-refresh-rate']){
+			$responsiveRefreshRate 	= ($block['settings']['responsive-refresh-rate']) ? $block['settings']['responsive-refresh-rate']: 200;
+			$carouselParams 		.= 'responsiveRefreshRate:'.$responsiveRefreshRate.',';
+		}
+
+		if($block['settings']['video']){
+			$video 				= ($block['settings']['video']) ? 'true': 'false';
+			$carouselParams 	.= 'video:'.$video.',';
+		}
+
+		if($block['settings']['video-height']){
+			$videoHeight 		= ($block['settings']['video-height']) ? $block['settings']['video-height']: 'false';
+			$carouselParams 	.= 'videoHeight:'.$videoHeight.',';
+		}
+
+		if($block['settings']['video-width']){
+			$videoWidth 		= ($block['settings']['video-width']) ? $block['settings']['video-width']: 'false';
+			$carouselParams 	.= 'videoWidth:'.$videoWidth.',';
+		}
+
+		if($block['settings']['animate-out']){
+			$animateOut 		= ($block['settings']['animate-out']) ? $block['settings']['animate-out']: '';
+			$carouselParams 	.= 'animateOut:'.$animateOut.',';
+		}
+
+		if($block['settings']['animate-in']){
+			$animateIn 			= ($block['settings']['animate-in']) ? $block['settings']['animate-in']: '';
+			$carouselParams 	.= 'animateIn:'.$animateIn.',';
+		}
+
+		if($block['settings']['fallback-easing']){
+			$fallbackEasing 	= ($block['settings']['fallback-easing']) ? $block['settings']['fallback-easing']: '';
+			$carouselParams 	.= 'fallbackEasing:'.$fallbackEasing.',';
+		}
+
+		if($block['settings']['nested-item-selector']){
+			$nestedItemSelector = ($block['settings']['nested-item-selector']) ? $block['settings']['nested-item-selector']: '';
+			$carouselParams 	.= 'nestedItemSelector:'.$nestedItemSelector.',';
+		}
+
+		if($block['settings']['item-element']){
+			$itemElement 		= ($block['settings']['item-element']) ? $block['settings']['item-element']: 'div';
+			$carouselParams 	.= 'itemElement:'.$itemElement.',';
+		}
+
+		if($block['settings']['stage-element']){
+			$stageElement 	= ($block['settings']['stage-element']) ? $block['settings']['stage-element']: 'div';
+			$carouselParams .= 'stageElement:'.$stageElement.',';
+		}
+
+		if($block['settings']['nav-container']){
+			$navContainer 	= ($block['settings']['nav-container']) ? $block['settings']['nav-container']: '';
+			$carouselParams .= 'navContainer:'.$navContainer.',';
+		}
+
+		if($block['settings']['nav-container']){
+			$navContainer 	= ($block['settings']['nav-container']) ? $block['settings']['nav-container']: '';
+			$carouselParams .= 'navContainer:'.$navContainer.',';
+		}
+
+		if($block['settings']['dots-container']){
+			$dotsContainer 	= ($block['settings']['dots-container']) ? $block['settings']['dots-container']: '';
+			$carouselParams .= 'dotsContainer:'.$dotsContainer.',';
+		}
+
+		if($block['settings']['check-visible']){
+			$checkVisible 	= ($block['settings']['check-visible']) ? 'true': 'false';
+			$carouselParams .= 'checkVisible:'.$checkVisible.',';
+		}
+		$carouselParams = rtrim($carouselParams, ',');
+		
+ 		
+		$js = 'jQuery(document).ready(function($){';
+		$js .= 'window.carousel_'.$block['id'].' = $("#content-slider-'.$block['id'].'.owl-carousel").owlCarousel({';
+		$js .= $carouselParams;
+		$js .= '});});';
+
+		return $js;
 	}
 
 	function custom_excerpt_post($text, $limit = 20){

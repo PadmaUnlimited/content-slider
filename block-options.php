@@ -160,7 +160,7 @@ class PadmaContentSliderBlockOptions extends PadmaBlockOptionsAPI {
 				'name' 		=> 'merge-fit',
 				'label' 	=> 'Merge Fit',
 				'tooltip' 	=> 'Fit merged items if screen is smaller than items value.',
-			),			
+			),
 
 			'auto-width' => array(
 				'type' 		=> 'checkbox',
@@ -168,6 +168,14 @@ class PadmaContentSliderBlockOptions extends PadmaBlockOptionsAPI {
 				'name' 		=> 'auto-width',
 				'label' 	=> 'Auto Width',
 				'tooltip' 	=> 'Set non grid content. Try using width style on divs.',
+			),
+
+			'item-width' => array(
+				'type' 		=> 'integer',
+				'default' 	=> 800,
+				'name' 		=> 'item-width',
+				'label' 	=> 'Item Width',
+				'tooltip' 	=> 'Number in px. Require Auto Width',
 			),
 			
 			'start-position' => array(
