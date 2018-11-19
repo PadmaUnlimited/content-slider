@@ -5,6 +5,7 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
     public $id 				= 'content-slider-block';    
     public $name 			= 'Content Slider';
     public $options_class 	= 'PadmaContentSliderBlockOptions';
+    public $categories 		= array('content','gallery');
     
 			
 	function setup_elements() {
