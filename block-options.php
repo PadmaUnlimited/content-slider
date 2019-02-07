@@ -71,6 +71,28 @@ class PadmaContentSliderBlockOptions extends PadmaBlockOptionsAPI {
 				'label' 	=> 'Only show featured image',
 				'tooltip' 	=> 'Only show featured image',
 			),
+
+			'only-excerpt' => array(
+				'type' 		=> 'checkbox',
+				'default' 	=> false,
+				'name' 		=> 'only-excerpt',
+				'label' 	=> 'Only show excerpt',
+				'tooltip' 	=> 'Only show excerpt',
+			),
+			'show-link' => array(
+				'type' 		=> 'checkbox',
+				'default' 	=> true,
+				'name' 		=> 'show-link',
+				'label' 	=> 'Show link',
+				'tooltip' 	=> 'Show content link',
+			),
+			'show-link-text' => array(
+				'type' 		=> 'text',
+				'default' 	=> 'Show more',
+				'name' 		=> 'show-link-text',
+				'label' 	=> 'Link text',
+				'tooltip' 	=> 'Text for link ',
+			),
 		),
 		'slider-tab' => array(
 

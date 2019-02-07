@@ -28,7 +28,11 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$order_by 			= ($block['settings']['order-by']) ? $block['settings']['order-by']: 'date';
 		$order 				= ($block['settings']['order']) ? $block['settings']['order']: 'desc';
 		$onlyShowFeatured 	= ($block['settings']['only-featured']) ? true: false;
+		$onlyShowExcerpt 	= ($block['settings']['only-excerpt']) ? true: false;
+		$showLink 			= ($block['settings']['show-link']) ? true: false;
+		$showLinkText		= ($block['settings']['show-link-text']) ? $block['settings']['show-link-text']: 'Show more';
 
+		
 		global $post;
 
 		$args 	= array ( 
@@ -64,9 +68,46 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 			}
 
 			if($onlyShowFeatured && has_post_thumbnail()){
-				$result .= $itemTag.get_the_post_thumbnail( $post->ID, 'content-slider-thumb', array( 'class' => "img-responsive" ) ).'</div>';
+				$result .= $itemTag;
+				$result .= get_the_post_thumbnail( 
+					$post->ID, 
+					'content-slider-thumb', 
+					array( 
+						'class' => "img-responsive",
+						'alt' 	=> get_the_title(),
+						'title' => get_the_title(),
+					)
+				);
+				$result .= '</div>';
+			
+			}elseif (!$onlyShowFeatured && has_post_thumbnail() ) {
+				
+				$result .= $itemTag;
+				$result .= get_the_post_thumbnail( $post->ID, 'content-slider-thumb', array( 'class' => "img-responsive" ) );
+				$result .= '<h3>'.get_the_title().'</h3>';
+				if($onlyShowExcerpt){
+					$result .= do_shortcode('<p>'.get_the_excerpt().'</p>');
+				}else{
+					$result .= do_shortcode('<p>'.get_the_content().'</p>');
+				}
+
+				if($showLink){
+					$result .= '<a href='.get_the_permalink().'>' . $showLinkText . '</a>';
+				}
+
+				$result .= '</div>';
+			
 			}else{
-				$result .= $itemTag.do_shortcode(get_the_content()).'</div>';				
+				if($onlyShowExcerpt){
+					$result .= $itemTag.do_shortcode('<p>'.get_the_excerpt().'</p>').'</div>';
+				}else{
+					$result .= $itemTag.do_shortcode('<p>'.get_the_content().'</p>').'</div>';
+				}
+
+				if($showLink){
+					$result .= '<a href='.get_the_permalink().'>' . $showLinkText . '</a>';
+				}
+				
 			}
 
 		endwhile;
@@ -162,16 +203,11 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 			$carouselParams .= 'rewind:'.$rewind.',';
 		}
 
-		if($block['settings']['rewind']){
-			$rewind = ($block['settings']['rewind']) ? 'true': 'false';
-			$carouselParams .= 'rewind:'.$rewind.',';
-		}
-
 		if($block['settings']['nav-text-next'] || $block['settings']['nav-text-prev']){
 			$navText_next	= ($block['settings']['nav-text-next']) ? $block['settings']['nav-text-next']: '&#x27;next&#x27;';
 			$navText_prev	= ($block['settings']['nav-text-prev']) ? $block['settings']['nav-text-prev']: '&#x27;prev&#x27;';
-			$navText 		= '['.$navText_next.','.$navText_prev.']';			
-			$carouselParams 		.= 'navText:"'.$navText.'",';
+			$navText 		= '["'.$navText_next.'","'.$navText_prev.'"]';
+			$carouselParams .= 'navText:"'.$navText.'",';
 		}
 
 		if($block['settings']['nav-element']){
@@ -308,6 +344,9 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 			$checkVisible 	= ($block['settings']['check-visible']) ? 'true': 'false';
 			$carouselParams .= 'checkVisible:'.$checkVisible.',';
 		}
+		
+		$carouselParams .= 'responsive:{ 0:{ items: 1 }, 480:{ items: 1 }, 640:{ items: 2 }, 1200:{ items: 3 }  }';
+	 
 		$carouselParams = rtrim($carouselParams, ',');
 		
  		
