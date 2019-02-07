@@ -83,7 +83,17 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 			}elseif (!$onlyShowFeatured && has_post_thumbnail() ) {
 				
 				$result .= $itemTag;
-				$result .= get_the_post_thumbnail( $post->ID, 'content-slider-thumb', array( 'class' => "img-responsive" ) );
+				$result .= get_the_post_thumbnail( 
+					$post->ID, 
+					'content-slider-thumb', 
+					array( 
+						'class' => "img-responsive",
+						'alt' 	=> get_the_title(),
+						'title' => get_the_title(),
+					)
+				);
+
+
 				$result .= '<h3>'.get_the_title().'</h3>';
 				if($onlyShowExcerpt){
 					$result .= do_shortcode('<p>'.get_the_excerpt().'</p>');
