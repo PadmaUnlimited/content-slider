@@ -9,7 +9,9 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
     
 			
 	function setup_elements() {
+			
 		
+
 	}
 
 	public static function enqueue_action($block_id, $block) {

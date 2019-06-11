@@ -4,7 +4,7 @@
 Plugin Name:	Padma Content Slider
 Plugin URI:		https://www.padmaunlimited/plugins/content-slider
 Description:  	Padma Content Slider is a WordPress plugin that turns your posts into a post slider in different styles. Post slider is touch friendly and responsive for all devices.
-Version:		1.0.3
+Version:		1.0.2
 Author: 		Padma Unlimited Team
 Author URI: 	https://www.padmaunlimited.com/
 License:      	GPL2
@@ -46,20 +46,4 @@ function register_content_slider_block() {
 	
 	return padma_register_block('PadmaContentSliderBlock', substr(WP_PLUGIN_URL . '/' . str_replace(basename(__FILE__), '', plugin_basename(__FILE__)), 0, -1));
 
-}
-
-
-/**
- *
- * Updates control
- *
- */
-if(is_admin()){
-	add_action('after_setup_theme', 'padma_content_slider_updates');
-    function padma_content_slider_updates(){
-        if(class_exists('PadmaUpdater')){
-			$PadmaUpdater = new PadmaUpdater();
-			$PadmaUpdater->updater('padma-content-slider',__DIR__);
-		}
-    }
 }
