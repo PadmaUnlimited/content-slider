@@ -64,6 +64,34 @@ class PadmaContentSliderBlockOptions extends PadmaBlockOptionsAPI {
 				)
 			),
 
+			'only-title' => array(
+				'type' 		=> 'checkbox',
+				'default' 	=> false,
+				'name' 		=> 'only-title',
+				'label' 	=> 'Only show Title',
+				'tooltip' 	=> 'Only show Title',
+				'toggle'    => array(
+					'false' => array(
+						'hide' => array(
+							'#input-link-title'
+						)
+					),
+					'true' => array(
+						'show' => array(
+							'#input-link-title'
+						)
+					)
+				)
+			),
+
+			'link-title' => array(
+				'type' 		=> 'checkbox',
+				'default' 	=> false,
+				'name' 		=> 'link-title',
+				'label' 	=> 'Title as Link',
+				'tooltip' 	=> 'Title as Link',				
+			),
+
 			'only-featured' => array(
 				'type' 		=> 'checkbox',
 				'default' 	=> false,
