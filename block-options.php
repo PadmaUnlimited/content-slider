@@ -363,6 +363,13 @@ class PadmaContentSliderBlockOptions extends PadmaBlockOptionsAPI {
 				'label' 	=> 'Pause on Hover',
 				'tooltip' 	=> 'Pause on mouse hover.',
 			),
+			'autoplay-speed' => array(
+				'type' 		=> 'integer',
+				'default' 	=> 5000,
+				'name' 		=> 'autoplay-speed',
+				'label' 	=> 'Autoplay Speed.',
+				'tooltip' 	=> 'Autoplay speed.',
+			),
 			/*
 			'smartSpeed' => array(
 				'type' 		=> 'integer',

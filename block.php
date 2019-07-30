@@ -304,7 +304,7 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$carouselParams .= 'lazyLoadEager:'. (!empty($block['settings']['lazy-load-eager']) ? $block['settings']['lazy-load-eager'] : '0') . ', ';
 		
 		// autoPlay
-		$carouselParams .= 'autoPlay:'. (!empty($block['settings']['autoplay']) ? $block['settings']['autoplay'] : 'false') . ', ';
+		$carouselParams .= 'autoPlay:'. (!empty($block['settings']['autoplay']) ? 'true' : 'false') . ', ';
 		
 		// autoplayTimeout
 		$carouselParams .= 'autoplayTimeout:'. (!empty($block['settings']['autoplay-timeout']) ? $block['settings']['autoplay-timeout'] : '5000') . ', ';
@@ -319,7 +319,8 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$carouselParams 	.= 'fluidSpeed:'. (!empty($block['settings']['fluid-speed']) ? $block['settings']['fluid-speed'] : 'Number') . ', ';		
 
 		// autoplaySpeed
-		$carouselParams 	.= 'autoplaySpeed:'. (!empty($block['settings']['autoplay-speed']) ? $block['settings']['autoplay-speed'] : 'false') . ', ';		
+		$carouselParams 	.= 'autoplaySpeed:'. (!empty($block['settings']['autoplay-speed']) ? $block['settings']['autoplay-speed'] : 'false') . ', ';
+
 		// navSpeed
 		$carouselParams 	.= 'navSpeed:'. (!empty($block['settings']['nav-speed']) ? $block['settings']['nav-speed'] : 'false') . ', ';		
 
