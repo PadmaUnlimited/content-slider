@@ -83,6 +83,30 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 			'selector' => '.owl-dots .owl-dot'
 		));
 
+		$this->register_block_element(array(
+			'id' => 'nav',
+			'name' => 'Navigation',
+			'selector' => '.owl-nav'
+		));
+
+		$this->register_block_element(array(
+			'id' => 'nav-item',
+			'name' => 'Navigation item',
+			'selector' => '.owl-nav div'
+		));
+
+		$this->register_block_element(array(
+			'id' => 'nav-item-next',
+			'name' => 'Navigation Next',
+			'selector' => '.owl-nav div.owl-next'
+		));
+
+		$this->register_block_element(array(
+			'id' => 'nav-item-prev',
+			'name' => 'Navigation Prev',
+			'selector' => '.owl-nav div.owl-prev'
+		));
+
 		
 
 	}
@@ -98,23 +122,23 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 	function content($block) {
 
 		// Content
-		$post_type 			= ($block['settings']['post-type']) ? $block['settings']['post-type']: 'post';
-		$categories 		= ($block['settings']['categories']) ? $block['settings']['categories']: array();
-		$order_by 			= ($block['settings']['order-by']) ? $block['settings']['order-by']: 'date';
-		$order 				= ($block['settings']['order']) ? $block['settings']['order']: 'desc';
-		$onlyShowTitle 		= ($block['settings']['only-title']) ? true: false;
-		$linkTitle 			= ($block['settings']['link-title']) ? true: false;
-		$onlyShowFeatured 	= ($block['settings']['only-featured']) ? true: false;
-		$onlyShowExcerpt 	= ($block['settings']['only-excerpt']) ? true: false;
-		$showLink 			= ($block['settings']['show-link']) ? true: false;
-		$showLinkText		= ($block['settings']['show-link-text']) ? $block['settings']['show-link-text']: 'Show more';
+		$post_type 			= ( !empty($block['settings']['post-type']) ) ? $block['settings']['post-type']: 'post';
+		$categories 		= ( !empty($block['settings']['categories']) ) ? $block['settings']['categories']: array();
+		$order_by 			= ( !empty($block['settings']['order-by']) ) ? $block['settings']['order-by']: 'date';
+		$order 				= ( !empty($block['settings']['order']) ) ? $block['settings']['order']: 'desc';
+		$onlyShowTitle 		= ( !empty($block['settings']['only-title']) ) ? true: false;
+		$linkTitle 			= ( !empty($block['settings']['link-title']) ) ? true: false;
+		$onlyShowFeatured 	= ( !empty($block['settings']['only-featured']) ) ? true: false;
+		$onlyShowExcerpt 	= ( !empty($block['settings']['only-excerpt']) ) ? true: false;
+		$showLink 			= ( !empty($block['settings']['show-link']) ) ? true: false;
+		$showLinkText		= ( !empty($block['settings']['show-link-text']) ) ? $block['settings']['show-link-text']: 'Show more';
 
 		
 		global $post;
 
 		$args 	= array ( 
 					'post_type' 		=> $post_type,
-					'posts_per_page' 	=> $number,
+					//'posts_per_page' 	=> $number,
 					'orderby' 			=> $order_by,
 					'order' 			=> $order 
 				);
@@ -138,7 +162,7 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 
 			setup_postdata( $post );			
 
-			if($block['settings']['item-width']){
+			if( !empty($block['settings']['item-width']) ){
 				$itemTag = '<div class="item" style="width:'.$block['settings']['item-width'].'px">';
 			}else{
 				$itemTag = '<div class="item">';
@@ -270,13 +294,13 @@ class PadmaContentSliderBlock extends PadmaBlockAPI {
 		$carouselParams .= 'rewind:'. ( !empty($block['settings']['rewind']) ? $block['settings']['rewind']: 'true' ) . ', ';
 
 		// navText
-		if($block['settings']['nav-text-next'] || $block['settings']['nav-text-prev']){
-			$navText_next	= ($block['settings']['nav-text-next']) ? $block['settings']['nav-text-next']: '>';
-			$navText_prev	= ($block['settings']['nav-text-prev']) ? $block['settings']['nav-text-prev']: '<';
-			$navText 		= '["'.$navText_next.'","'.$navText_prev.'"]';
-			$carouselParams .= 'navText:"'.$navText.'",';
+		if( !empty($block['settings']['nav-text-next']) || !empty($block['settings']['nav-text-prev']) ){
+			
+			$navText_next	= ( !empty($block['settings']['nav-text-next']) ) ? $block['settings']['nav-text-next']: '>';
+			$navText_prev	= ( !empty($block['settings']['nav-text-prev']) ) ? $block['settings']['nav-text-prev']: '<';
+			$carouselParams .= 'navText:["'.$navText_prev.'","'.$navText_next.'"],';
 		}else{
-			$carouselParams .= 'navText:"[&#x27;next&#x27;,&#x27;prev&#x27;]",';			
+			$carouselParams .= 'navText:["Prev","Next"],';			
 		}
 
 		// navElement
